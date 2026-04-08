@@ -15,10 +15,14 @@ import ForgotPassword from "../pages/ForgotPassword";
 import ProgressPhotos from "../pages/ProgressPhotos";
 import ResetPassword from "../pages/ResetPassword";
 import EditProfile from "../pages/EditProfile";
+import NotFound from "../pages/NotFound";
+import Contact from "../pages/Contact";
+import Logs from "../pages/Logs";
 
 //  FIXED IMPORTS
 import Programs from "../pages/Programs";
 import Workout from "../pages/Workout";
+import RouteErrorBoundary from "./routes/RouteErrorBoundary";
 
 //  Theme handling
 const savedTheme = localStorage.getItem("theme");
@@ -37,27 +41,32 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <RouteErrorBoundary />,
     children: [
       // Public routes
       {
         path: "/",
-        element: <LandingPage />,
+        element: <LandingPage />
       },
       {
         path: "/login",
-        element: <Login />,
+        element: <Login />
       },
       {
         path: "/signup",
-        element: <Signup />,
+        element: <Signup />
       },
       {
         path: "/forgot-password",
-        element: <ForgotPassword />,
+        element: <ForgotPassword />
       },
       {
         path: "/reset-password",
-        element: <ResetPassword />,
+        element: <ResetPassword />
+      },
+      {
+        path: "/contact",
+        element: <Contact />
       },
 
       // Protected routes
@@ -67,7 +76,7 @@ const router = createBrowserRouter([
           <ProtectedRoute>
             <Profile />
           </ProtectedRoute>
-        ),
+        )
       },
       {
         path: "/edit-profile",
@@ -75,7 +84,7 @@ const router = createBrowserRouter([
           <ProtectedRoute>
             <EditProfile />
           </ProtectedRoute>
-        ),
+        )
       },
       {
         path: "/food",
@@ -83,7 +92,7 @@ const router = createBrowserRouter([
           <ProtectedRoute>
             <FoodDiary />
           </ProtectedRoute>
-        ),
+        )
       },
       {
         path: "/progress-photos",
@@ -91,7 +100,7 @@ const router = createBrowserRouter([
           <ProtectedRoute>
             <ProgressPhotos />
           </ProtectedRoute>
-        ),
+        )
       },
 
       //  NEW FEATURES (Protected)
@@ -101,7 +110,7 @@ const router = createBrowserRouter([
           <ProtectedRoute>
             <Programs />
           </ProtectedRoute>
-        ),
+        )
       },
       {
         path: "/workout",
@@ -109,10 +118,22 @@ const router = createBrowserRouter([
           <ProtectedRoute>
             <Workout />
           </ProtectedRoute>
-        ),
+        )
       },
-    ],
-  },
+      {
+        path: "/llogs",
+        element: (
+          <ProtectedRoute>
+            <Logs />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: "*",
+        element: <NotFound />
+      }
+    ]
+  }
 ]);
 
 //  App render
@@ -121,5 +142,5 @@ createRoot(document.getElementById("root")).render(
     <FoodProvider>
       <RouterProvider router={router} />
     </FoodProvider>
-  </StrictMode>,
+  </StrictMode>
 );
